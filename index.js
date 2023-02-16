@@ -17,3 +17,46 @@ const connection = mysql.createConnection({
     console.log(`Connected as id ${connection.threadId}`);
     start();
   });
+
+  // main menu prompt
+function start() {
+    inquirer.prompt({
+      name: 'action',
+      type: 'list',
+      message: 'What would you like to do?',
+      choices: [
+        'View all employees',
+        'View all roles',
+        'View all departments',
+        'Add employee',
+        'Add role',
+        'Add department',
+        'Exit'
+      ]
+    })
+    .then((answer) => {
+      switch (answer.action) {
+        case 'View all employees':
+          viewEmployees();
+          break;
+        case 'View all roles':
+          viewRoles();
+          break;
+        case 'View all departments':
+          viewDepartments();
+          break;
+        case 'Add employee':
+          addEmployee();
+          break;
+        case 'Add role':
+          addRole();
+          break;
+        case 'Add department':
+          addDepartment();
+          break;
+        case 'Exit':
+          connection.end();
+          break;
+      }
+    });
+  }
