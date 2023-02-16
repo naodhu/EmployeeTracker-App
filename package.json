@@ -2,6 +2,8 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "express": "^4.18.2",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.1.2",
+    "sql": "^0.78.0"
   }
 }
