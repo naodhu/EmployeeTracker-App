@@ -337,6 +337,77 @@ function updateEmployeeManager() {
       });
     });
   }
+
+
+  // View employees by manager
+function viewEmployeesByManager() {
+    // Get all employees and managers
+    const query = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+    `;
+    connection.query(query, (err, employees) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          name: 'manager',
+          type: 'list',
+          message: 'Select the manager to view employees for:',
+          choices: employees.map((employee) => ({ name: employee.name, value: employee.id }))
+        }
+      ])
+      .then((answer) => {
+        const query = `
+          SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+          FROM employee e
+          LEFT JOIN role r ON e.role_id = r.id
+          LEFT JOIN department d ON r.department_id = d.id
+          LEFT JOIN employee m ON e.manager_id = m.id
+          WHERE e.manager_id = ?
+        `;
+        connection.query(query, [answer.manager], (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          start();
+        });
+      });
+    });
+  }
+
+  // View employees by department
+function viewEmployeesByDepartment() {
+    // Get all departments
+    const query = `
+      SELECT id, name
+      FROM department
+    `;
+    connection.query(query, (err, departments) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          name: 'department',
+          type: 'list',
+          message: 'Select the department to view employees for:',
+          choices: departments.map((department) => ({ name: department.name, value: department.id }))
+        }
+      ])
+      .then((answer) => {
+        const query = `
+          SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+          FROM employee e
+          LEFT JOIN role r ON e.role_id = r.id
+          LEFT JOIN department d ON r.department_id = d.id
+          LEFT JOIN employee m ON e.manager_id = m.id
+          WHERE d.id = ?
+        `;
+        connection.query(query, [answer.department], (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          start();
+        });
+      });
+    });
+  }
   
 
 
