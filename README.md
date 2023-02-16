@@ -22,7 +22,7 @@ Description: Employee Tracker is a Node.js, SQL, and JavaScript-based command li
 
 
 ## Acknowledgements
-We would like to acknowledge and extend our gratitude to the developers and contributors of the inquirer, console.table, and mysql2 libraries, without which this application would not have been possible. Thank you for your hard work and dedication to creating and maintaining these valuable tools.
+I would like to acknowledge and extend my gratitude to the developers and contributors of the inquirer, console.table, and mysql2 libraries, without which this application would not have been possible. Thank you for your hard work and dedication to creating and maintaining these valuable tools.
 
  - [Inquirer](https://github.com/SBoudrias/Inquirer.js#readme)
  - [Console.table](https://github.com/bahmutov/console.table)
