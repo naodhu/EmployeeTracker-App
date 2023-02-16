@@ -82,3 +82,16 @@ function start() {
       }
     });
   }
+
+  // View all departments
+function viewAllDepartments() {
+    const query = `
+      SELECT id, name AS department
+      FROM department
+    `;
+    connection.query(query, (err, departments) => {
+      if (err) throw err;
+      console.table(departments);
+      start();
+    });
+  }
