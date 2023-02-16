@@ -245,4 +245,98 @@ function addEmployee() {
   }
 
 
+  // Update an employee role
+function updateEmployeeRole() {
+    // Get all employees and roles
+    const query1 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+    `;
+    const query2 = connection.query(query1, (err, employees) => {
+        if (err) throw err;
+        const query2 = `
+          SELECT id, title
+          FROM role
+        `;
+        connection.query(query2, (err, roles) => {
+          if (err) throw err;
+          inquirer.prompt([
+            {
+              name: 'employee',
+              type: 'list',
+              message: 'Select the employee to update:',
+              choices: employees.map((employee) => ({ name: employee.name, value: employee.id }))
+            },
+            {
+              name: 'role',
+              type: 'list',
+              message: 'Select the new role of the employee:',
+              choices: roles.map((role) => ({ name: role.title, value: role.id }))
+            }
+          ])
+          .then((answer) => {
+            const query = `
+              UPDATE employee
+              SET role_id = ?
+              WHERE id = ?
+            `;
+            connection.query(query, [answer.role, answer.employee], (err, res) => {
+              if (err) throw err;
+              console.log(`${res.affectedRows} employee updated!\n`);
+              start();
+            });
+          });
+        });
+      });
+    }
+    
+
+    // Update an employee manager
+function updateEmployeeManager() {
+    // Get all employees and managers
+    const query1 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+    `;
+    const query2 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+    `;
+    connection.query(query1, (err, employees) => {
+      if (err) throw err;
+      connection.query(query2, (err, managers) => {
+        if (err) throw err;
+        // Add option to not select a manager
+        managers.unshift({ id: null, name: 'None' });
+        inquirer.prompt([
+          {
+            name: 'employee',
+            type: 'list',
+            message: 'Select the employee to update:',
+            choices: employees.map((employee) => ({ name: employee.name, value: employee.id }))
+          },
+          {
+            name: 'manager',
+            type: 'list',
+            message: 'Select the new manager of the employee:',
+            choices: managers.map((manager) => ({ name: manager.name, value: manager.id }))
+          }
+        ])
+        .then((answer) => {
+          const query = `
+            UPDATE employee
+            SET manager_id = ?
+            WHERE id = ?
+          `;
+          connection.query(query, [answer.manager, answer.employee], (err, res) => {
+            if (err) throw err;
+            console.log(`${res.affectedRows} employee updated!\n`);
+            start();
+          });
+        });
+      });
+    });
+  }
+  
+
 
