@@ -31,7 +31,7 @@ I would like to acknowledge and extend my gratitude to the developers and contri
 
 ## Authors
 
-- [@naod](https://github.com/sidorares/node-mysql2#readme)
+- [@naod](https://github.com/naodhu)
 
 
 ## Badges
