@@ -410,4 +410,135 @@ function viewEmployeesByDepartment() {
   }
   
 
+  // Delete a department
+function deleteDepartment() {
+    // Get all departments
+    const query1 = `
+      SELECT id, name
+      FROM department
+    `;
+    // Get all roles in the selected department
+    const query2 = `
+      SELECT id, title
+      FROM role
+      WHERE department_id = ?
+    `;
+    // Get all employees in the selected department
+    const query3 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+      WHERE role_id IN (
+        SELECT id
+        FROM role
+        WHERE department_id = ?
+      )
+    `;
+    inquirer.prompt([
+      {
+        name: 'department',
+        type: 'list',
+        message: 'Select the department to delete:',
+        choices: () => {
+          return new Promise((resolve, reject) => {
+            connection.query(query1, (err, departments) => {
+              if (err) reject(err);
+              resolve(departments.map((department) => ({ name: department.name, value: department.id })));
+            });
+          });
+        }
+      }
+    ])
+    .then((answer) => {
+      // Delete department
+      const query = `
+        DELETE FROM department
+        WHERE id = ?
+      `;
+      connection.query(query, [answer.department], (err, res) => {
+        if (err) throw err;
+        console.log(`${res.affectedRows} department deleted!\n`);
+        start();
+      });
+    });
+  }
+
+
+  // Delete a role
+function deleteRole() {
+    // Get all roles
+    const query1 = `
+      SELECT id, title
+      FROM role
+    `;
+    // Get all employees with the selected role
+    const query2 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+      WHERE role_id = ?
+    `;
+    inquirer.prompt([
+      {
+        name: 'role',
+        type: 'list',
+        message: 'Select the role to delete:',
+        choices: () => {
+          return new Promise((resolve, reject) => {           connection.query(query1, (err, roles) => {
+            if (err) reject(err);
+            resolve(roles.map((role) => ({ name: role.title, value: role.id })));
+          });
+        });
+      }
+    }
+  ])
+  .then((answer) => {
+    // Delete role
+    const query = `
+      DELETE FROM role
+      WHERE id = ?
+    `;
+    connection.query(query, [answer.role], (err, res) => {
+      if (err) throw err;
+      console.log(`${res.affectedRows} role deleted!\n`);
+      start();
+    });
+  });
+}
+
+// Delete an employee
+function deleteEmployee() {
+  // Get all employees
+  const query1 = `
+    SELECT id, CONCAT(first_name, ' ', last_name) AS name
+    FROM employee
+  `;
+  inquirer.prompt([
+    {
+      name: 'employee',
+      type: 'list',
+      message: 'Select the employee to delete:',
+      choices: () => {
+        return new Promise((resolve, reject) => {
+          connection.query(query1, (err, employees) => {
+            if (err) reject(err);
+            resolve(employees.map((employee) => ({ name: employee.name, value: employee.id })));
+          });
+        });
+      }
+    }
+  ])
+  .then((answer) => {
+    // Delete employee
+    const query = `
+      DELETE FROM employee
+      WHERE id = ?
+    `;
+    connection.query(query, [answer.employee], (err, res) => {
+      if (err) throw err;
+      console.log(`${res.affectedRows} employee deleted!\n`);
+      start();
+    });
+  });
+}
+
+
 
