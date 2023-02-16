@@ -13,15 +13,16 @@ CREATE TABLE employee (
   last_name VARCHAR(30) NOT NULL,
   role_id INT NOT NULL,
   manager_id INT,
+  PRIMARY KEY (id),
   FOREIGN KEY (role_id) REFERENCES role (id),
   FOREIGN KEY (manager_id) REFERENCES employee (id)
 );
 
 -- Insert data into the employee table
-INSERT INTO employee (first_name, last_name, role_id) VALUES
-('John', 'Doe', 1),
-('Jane', 'Doe', 2),
-('Bob', 'Smith', 3);
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
+('John', 'Doe', 1, 1),
+('Jane', 'Doe', 2, 1),
+('Bob', 'Smith', 3), 1;
 
 -- Create the role table
 CREATE TABLE role (
@@ -29,7 +30,7 @@ CREATE TABLE role (
   title VARCHAR(30) NOT NULL,
   salary DECIMAL(10,2) NOT NULL,
   department_id INT NOT NULL,
-  FOREIGN KEY (department_id) REFERENCES department (id)
+  PRIMARY KEY (id)
 );
 
 -- Insert data into the role table
@@ -41,7 +42,8 @@ INSERT INTO role (title, salary, department_id) VALUES
 -- Create the department table
 CREATE TABLE department (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL
+  name VARCHAR(30) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 -- Insert data into the department table
@@ -49,3 +51,4 @@ INSERT INTO department (name) VALUES
 ('Management'),
 ('Sales'),
 ('Engineering');
+
