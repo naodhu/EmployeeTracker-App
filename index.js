@@ -125,3 +125,124 @@ function viewAllEmployees() {
       start();
     });
   }
+
+  // Add a department
+function addDepartment() {
+    inquirer.prompt([
+      {
+        name: 'name',
+        type: 'input',
+        message: 'Enter the name of the department:'
+      }])
+      .then((answer) => {
+        const query = `
+          INSERT INTO department (name)
+          VALUES (?)
+        `;
+        connection.query(query, [answer.name], (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} department added!\n`);
+          start();
+        });
+      });
+    }
+
+    // Add a role
+function addRole() {
+    // Get all departments
+    const query = `
+      SELECT id, name
+      FROM department
+    `;
+    connection.query(query, (err, departments) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          name: 'title',
+          type: 'input',
+          message: 'Enter the title of the role:'
+        },
+        {
+          name: 'salary',
+          type: 'input',
+          message: 'Enter the salary of the role:'
+        },
+        {
+          name: 'department',
+          type: 'list',
+          message: 'Select the department of the role:',
+          choices: departments.map((department) => ({ name: department.name, value: department.id }))
+        }
+      ])
+      .then((answer) => {
+        const query = `
+          INSERT INTO role (title, salary, department_id)
+          VALUES (?, ?, ?)
+        `;
+        connection.query(query, [answer.title, answer.salary, answer.department], (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} role added!\n`);
+          start();
+        });
+      });
+    });
+  }
+
+  // Add an employee
+function addEmployee() {
+    // Get all roles and employees
+    const query1 = `
+      SELECT id, title
+      FROM role
+    `;
+    const query2 = `
+      SELECT id, CONCAT(first_name, ' ', last_name) AS name
+      FROM employee
+    `;
+    connection.query(query1, (err, roles) => {
+      if (err) throw err;
+      connection.query(query2, (err, employees) => {
+        if (err) throw err;
+        // Add option to not select a manager
+        employees.unshift({ id: null, name: 'None' });
+        inquirer.prompt([
+          {
+            name: 'firstName',
+            type: 'input',
+            message: 'Enter the first name of the employee:'
+          },
+          {
+            name: 'lastName',
+            type: 'input',
+            message: 'Enter the last name of the employee:'
+          },
+          {
+            name: 'role',
+            type: 'list',
+            message: 'Select the role of the employee:',
+            choices: roles.map((role) => ({ name: role.title, value: role.id }))
+          },
+          {
+            name: 'manager',
+            type: 'list',
+            message: 'Select the manager of the employee:',
+            choices: employees.map((employee) => ({ name: employee.name, value: employee.id }))
+          }
+        ])
+        .then((answer) => {
+          const query = `
+            INSERT INTO employee (first_name, last_name, role_id, manager_id)
+            VALUES (?, ?, ?, ?)
+          `;
+          connection.query(query, [answer.firstName, answer.lastName, answer.role, answer.manager], (err, res) => {
+            if (err) throw err;
+            console.log(`${res.affectedRows} employee added!\n`);
+            start();
+          });
+        });
+      });
+    });
+  }
+
+
+
