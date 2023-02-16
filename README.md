@@ -60,10 +60,23 @@ Run the application:
 In the terminal window, run the following command to start the application: node index.js.
 You should now be able to interact with the Employee Tracker through the command line interface.
 ```
+
+## Demo
+[Click here for the Demo](https://drive.google.com/file/d/1us39j91sbqVasxJIzlKn0tgTLunsgPoi/view)
+
+![Untitled_ Feb 16, 2023 9_26 PM](https://user-images.githubusercontent.com/113915529/219340897-17ab9d58-11f5-4aca-98d4-3d79eec9a2d6.gif)
+
+
+
+
     
 ## Screenshots
 
-[App Screenshot]
+[App Screenshot]<img width="1502" alt="Screen Shot 2023-02-16 at 21 15 13 pm" src="https://user-images.githubusercontent.com/113915529/219340578-ed91d1b2-db98-4711-b87e-c32bb0eec85c.png">
+
+
+
+[App Screenshot]<img width="1503" alt="Screen Shot 2023-02-16 at 21 16 38 pm" src="https://user-images.githubusercontent.com/113915529/219340610-c9d7f776-1931-4cfd-8ca2-732dd83a83e8.png">
 
 
 ## 🚀 About Me
