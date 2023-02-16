@@ -60,3 +60,32 @@ function start() {
       }
     });
   }
+
+  // functions to view employees, roles, and departments
+function viewEmployees() {
+    // perform a SELECT query on the employee table and display the results
+    connection.query('SELECT * FROM employee', (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      start();
+    });
+  }
+  
+  function viewRoles() {
+    // perform a SELECT query on the role table and display the results
+    connection.query('SELECT * FROM role', (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      start();
+    });
+  }
+  
+  function viewDepartments() {
+    // perform a SELECT query on the department table and display the results
+    connection.query('SELECT * FROM department', (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      start();
+    });
+  }
+  
