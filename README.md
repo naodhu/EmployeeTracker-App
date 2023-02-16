@@ -1,7 +1,24 @@
 
 # Employee Tracker
 
-Description: Employee Tracker is a Node.js, SQL, and JavaScript-based command line application for managing a company's employee information, including adding, updating, and viewing employees, departments, and roles. The application uses inquirer, console.table, and mysql2 libraries for user interface, ASCII tables, and database connectivity, respectively. It simplifies the process of managing employee information and is useful for businesses of all sizes.
+Description: Employee Tracker is a Node.js, SQL, and JavaScript-based command line application for managing a company's employee information, including adding, updating, and viewing employees, departments, and roles. The application uses inquirer, console.table, and mysql2 libraries for user interface, ASCII tables, and database connectivity, respectively. It simplifies the process of managing employee information and is useful for businesses of all sizes. You are given with multiples options.
+        
+        choices: [
+          'View all departments',
+          'View all roles',
+          'View all employees',
+          'Add a department',
+          'Add a role',
+          'Add an employee',
+          'Update an employee role',
+          'Update an employee manager',
+          'View employees by manager',
+          'View employees by department',
+          'Delete a department',
+          'Delete a role',
+          'Delete an employee',
+          'Exit'
+      
 
 
 ## Acknowledgements
