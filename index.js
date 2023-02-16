@@ -11,6 +11,13 @@ const connection = mysql.createConnection({
     database: 'employee_tracker'
   });
 
+  connection.connect((err) => {
+    if (err) throw err;
+  
+    start();
+  });
+
+
   // Start the application
 function start() {
     inquirer.prompt([
