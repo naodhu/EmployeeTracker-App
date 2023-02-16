@@ -6,49 +6,63 @@ CREATE DATABASE employee_tracker;
 -- Use the employee_tracker database
 USE employee_tracker;
 
--- Create the employee table
+-- CREATE the employee table
 CREATE TABLE employee (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  role_id INT NOT NULL,
+  role_id INT,
   manager_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (role_id) REFERENCES role (id),
-  FOREIGN KEY (manager_id) REFERENCES employee (id)
+  FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
 
--- Insert data into the employee table
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
-('John', 'Doe', 1, 1),
-('Jane', 'Doe', 2, 1),
-('Bob', 'Smith', 3), 1;
+-- INSERT data into the employee table
+INSERT INTO
+  employee(first_name, last_name, role_id, manager_id)
+VALUES
+  ("Ron", "Paul", 1, 1),
+  ("Frederick", "Douglas", 2, 1),
+  ("Tulsi", "Gabbard", 4, 1),
+  ("Mos", "Def", 3, 1),
+  ("Chester", "Bennington", 5, 1),
+  ("Seth", "Gerlach", 2, 1),
+  ("Gary", "Oldman", 3, 1),
+  ("Harry", "Potter", 1, 1),
+  ("Robert", "Pattinson", 1, 1);
 
--- Create the role table
+-- CREATE the role table
 CREATE TABLE role (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(30) NOT NULL,
-  salary DECIMAL(10,2) NOT NULL,
-  department_id INT NOT NULL,
+  salary DECIMAL NOT NULL,
+  department_id INT,
   PRIMARY KEY (id)
 );
 
--- Insert data into the role table
-INSERT INTO role (title, salary, department_id) VALUES
-('Manager', 80000.00, 1),
-('Salesperson', 50000.00, 2),
-('Engineer', 75000.00, 3);
+-- INSERT data into the role table
+INSERT INTO
+  role(title, salary, department_id)
+VALUES
+  ('Manager', 5000000, 1),
+  ('Engineer', 1000000, 2),
+  ('Accountant', 4000000, 3),
+  ('Designer', 3000000, 4),
+  ('Administration', 2000000, 5);
 
--- Create the department table
+-- CREATE the department table
 CREATE TABLE department (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
   PRIMARY KEY (id)
 );
 
--- Insert data into the department table
-INSERT INTO department (name) VALUES
-('Management'),
-('Sales'),
-('Engineering');
-
+-- INSERT data into the department table
+INSERT INTO
+  department(name)
+VALUES
+  ('Management'),
+  ('Engineering'),
+  ('Accounting'),
+  ('Marketing'),
+  ('Human Resources');
