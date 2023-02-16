@@ -95,3 +95,33 @@ function viewAllDepartments() {
       start();
     });
   }
+
+  // View all roles
+function viewAllRoles() {
+    const query = `
+      SELECT r.id, r.title, d.name AS department, r.salary
+      FROM role r
+      INNER JOIN department d ON r.department_id = d.id
+    `;
+    connection.query(query, (err, roles) => {
+      if (err) throw err;
+      console.table(roles);
+      start();
+    });
+  }
+  
+  // View all employees
+function viewAllEmployees() {
+    const query = `
+      SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+      FROM employee e
+      INNER JOIN role r ON e.role_id = r.id
+      INNER JOIN department d ON r.department_id = d.id
+      LEFT JOIN employee m ON e.manager_id = m.id
+    `;
+    connection.query(query, (err, employees) => {
+      if (err) throw err;
+      console.table(employees);
+      start();
+    });
+  }
